@@ -34,7 +34,7 @@ for ele in basestr.split(';'):
     cmd = "curl '" + baseurl+conscode + ".htm' -o '" + htmlflname + "' 2>/dev/null"
     #print >> sys.stderr, cmd
     print >> sys.stderr, "Getting page for %s constituency" % constname.strip() 
-    #os.system(cmd)
+    os.system(cmd)
     if os.path.isfile(htmlflname):
         runcmd(htmlflname)
 

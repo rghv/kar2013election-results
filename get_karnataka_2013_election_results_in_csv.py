@@ -18,42 +18,42 @@ basestr="34,Afzalpur;46,Aland;177,Anekal;8,Arabhavi;198,Arkalgud;194,Arsikere;3,
 baseurl="http://eciresults.ap.nic.in/ConstituencywiseS10"
 
 def runcmd(file):
-	cmd="  grep \"Karnataka -\" '"+file+"' | "\
-		+" sed 's/<\/td>/\\n/g'  | "\
-		+" awk -F\"align=\" '{print $(NF)}' | "\
-		+" grep -v javascript | "\
-		+" cut -d\> -f2  | "\
-		+" tail -n +3 > '"+file+".hlst'"
-	#print >> sys.stderr, cmd
-	os.system(cmd)
+  cmd="  grep \"Karnataka -\" '"+file+"' | "\
+    +" sed 's/<\/td>/\\n/g'  | "\
+    +" awk -F\"align=\" '{print $(NF)}' | "\
+    +" grep -v javascript | "\
+    +" cut -d\> -f2  | "\
+    +" tail -n +3 > '"+file+".hlst'"
+  #print >> sys.stderr, cmd
+  os.system(cmd)
 
 for ele in basestr.split(';'):
-		conscode,constname=ele.split(',')
-		#print conscode,constname
-		htmlflname=conscode+"-"+constname.strip()+".html"
-		cmd = "curl '" + baseurl+conscode + ".htm' -o '" + htmlflname + "' 2>/dev/null"
-		#print >> sys.stderr, cmd
-		print >> sys.stderr, "Getting page for %s constituency" % constname.strip() 
-		os.system(cmd)
-		if os.path.isfile(htmlflname):
-				runcmd(htmlflname)
+    conscode,constname=ele.split(',')
+    #print conscode,constname
+    htmlflname=conscode+"-"+constname.strip()+".html"
+    cmd = "curl '" + baseurl+conscode + ".htm' -o '" + htmlflname + "' 2>/dev/null"
+    #print >> sys.stderr, cmd
+    print >> sys.stderr, "Getting page for %s constituency" % constname.strip() 
+    #os.system(cmd)
+    if os.path.isfile(htmlflname):
+        runcmd(htmlflname)
 
-		hlstname=htmlflname+".hlst"
-		if os.path.isfile(hlstname):
-				print "################################################################################################################################"
-				print "Constituency code, \t\t" + conscode
-				print "Constituency, \t\t\t" + constname
-				print "----------------------------------------------------"
-				sys.stdout.write("{0:<48}{1:<56}{2:<10}\n".format('Candiate','Party','Votes'))
-				f = open(hlstname,'r')
-				origlist=f.read().split('\n')
-				f.close()
-				lists = [origlist[i:i+3] for i in xrange(0, len(origlist), 3)]
-				try:
-						for sublist in lists:
-								sys.stdout.write("{0:<48}{1:<56}{2:<10}\n".format(sublist[0],sublist[1],sublist[2]))
-				#This is for the last elem in the origlist; it is just a '\n'
-				except IndexError:
-						pass
+    hlstname=htmlflname+".hlst"
+    if os.path.isfile(hlstname):
+        print "################################################################################################################################"
+        print "Constituency code, \t\t" + conscode
+        print "Constituency, \t\t\t" + constname
+        print "----------------------------------------------------"
+        sys.stdout.write("{0:<48}{1:<56}{2:<10}\n".format('Candiate','Party','Votes'))
+        f = open(hlstname,'r')
+        origlist=f.read().split('\n')
+        f.close()
+        lists = [origlist[i:i+3] for i in xrange(0, len(origlist), 3)]
+        try:
+            for sublist in lists:
+                sys.stdout.write("{0:<48}{1:<56}{2:<10}\n".format(sublist[0],sublist[1],sublist[2]))
+        #This is for the last elem in the origlist; it is just a '\n'
+        except IndexError:
+            pass
 
 

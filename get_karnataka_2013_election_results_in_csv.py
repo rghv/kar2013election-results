@@ -52,7 +52,6 @@ for ele in basestr.split(';'):
 				try:
 						for sublist in lists:
 								sys.stdout.write("{0:<48}{1:<56}{2:<10}\n".format(sublist[0],sublist[1],sublist[2]))
-								print "%48s,%56s,%10s" % (sublist[0],sublist[1],sublist[2]) 
 				#This is for the last elem in the origlist; it is just a '\n'
 				except IndexError:
 						pass

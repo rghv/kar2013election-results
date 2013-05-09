@@ -44,14 +44,14 @@ for ele in basestr.split(';'):
         print "Constituency code, \t\t" + conscode
         print "Constituency, \t\t\t" + constname
         print "----------------------------------------------------"
-        sys.stdout.write("{0:<48}{1:<56}{2:<10}\n".format('Candiate','Party','Votes'))
+        sys.stdout.write("{0:<48},{1:<56},{2:<10}\n".format('Candiate','Party','Votes'))
         f = open(hlstname,'r')
         origlist=f.read().split('\n')
         f.close()
         lists = [origlist[i:i+3] for i in xrange(0, len(origlist), 3)]
         try:
             for sublist in lists:
-                sys.stdout.write("{0:<48}{1:<56}{2:<10}\n".format(sublist[0],sublist[1],sublist[2]))
+                sys.stdout.write("{0:<48},{1:<56},{2:>10}\n".format(sublist[0],sublist[1],sublist[2]))
         #This is for the last elem in the origlist; it is just a '\n'
         except IndexError:
             pass
